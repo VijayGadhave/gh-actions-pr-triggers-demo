@@ -1,0 +1,24 @@
+name: 06 - PR Path Ignore (Skip docs & markdown)
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+
+jobs:
+  pr-path-ignore-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Confirm Non-Doc PR Change
+        run: |
+          echo "========================================="
+          echo "  PR PATH-IGNORE TRIGGERED!"
+          echo "========================================="
+          echo ""
+          echo "This PR has changes OUTSIDE docs/ and .md files"
+          echo "Source Branch : ${{ github.head_ref }}"
+          echo "Target Branch : ${{ github.base_ref }}"

@@ -1,0 +1,29 @@
+name: 04 - PR to Main or Develop
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  pr-multi-branch-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Identify Target Branch
+        run: |
+          echo "========================================="
+          echo "  PR TARGETING MAIN OR DEVELOP!"
+          echo "========================================="
+          echo ""
+          echo "Source Branch : ${{ github.head_ref }}"
+          echo "Target Branch : ${{ github.base_ref }}"
+          echo ""
+          if [ "${{ github.base_ref }}" == "main" ]; then
+            echo "Action: Full production test suite!"
+          elif [ "${{ github.base_ref }}" == "develop" ]; then
+            echo "Action: Development integration tests!"
+          fi

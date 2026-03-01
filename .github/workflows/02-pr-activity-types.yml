@@ -1,0 +1,47 @@
+name: 02 - PR Activity Types
+
+on:
+  pull_request:
+    types:
+      - opened
+      - closed
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  activity-type-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Display Activity Type
+        run: |
+          echo "========================================="
+          echo "  PR ACTIVITY TYPE DETECTED!"
+          echo "========================================="
+          echo ""
+          echo "Activity Type  : ${{ github.event.action }}"
+          echo "PR Number      : ${{ github.event.pull_request.number }}"
+          echo "PR Title       : ${{ github.event.pull_request.title }}"
+          echo "Source Branch  : ${{ github.head_ref }}"
+          echo "Target Branch  : ${{ github.base_ref }}"
+          echo ""
+          ACTION="${{ github.event.action }}"
+          if [ "$ACTION" == "opened" ]; then
+            echo "A NEW pull request was just opened!"
+          elif [ "$ACTION" == "closed" ]; then
+            MERGED="${{ github.event.pull_request.merged }}"
+            if [ "$MERGED" == "true" ]; then
+              echo "The pull request was MERGED!"
+            else
+              echo "The pull request was CLOSED without merging."
+            fi
+          elif [ "$ACTION" == "edited" ]; then
+            echo "The PR title or description was EDITED!"
+          elif [ "$ACTION" == "synchronize" ]; then
+            echo "New commits were PUSHED to this PR!"
+          elif [ "$ACTION" == "reopened" ]; then
+            echo "A closed PR was REOPENED!"
+          fi

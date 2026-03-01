@@ -1,0 +1,36 @@
+name: 07 - PR Combined Filter
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+
+jobs:
+  pr-combined-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Code Validation Pipeline
+        run: |
+          echo "========================================="
+          echo "  PR COMBINED FILTER — CODE VALIDATION"
+          echo "========================================="
+          echo ""
+          echo "Source Branch : ${{ github.head_ref }}"
+          echo "Target Branch : ${{ github.base_ref }}"
+          echo ""
+          echo "This workflow triggered because:"
+          echo "  ✅ PR targets 'main' branch"
+          echo "  ✅ PR changes files in src/ or tests/"
+          echo ""
+          echo "--- Simulating Code Validation ---"
+          echo "Step 1: Running linter..."
+          echo "Step 2: Running unit tests..."
+          echo "Step 3: Checking code coverage..."
+          echo "Step 4: Build verification..."
+          echo "Step 5: Code Validation Complete! ✅"

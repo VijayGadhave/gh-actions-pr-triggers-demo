@@ -1,0 +1,25 @@
+name: 03 - PR to Main Only
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pr-to-main-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Confirm PR Targets Main
+        run: |
+          echo "========================================="
+          echo "  PR TARGETING MAIN BRANCH!"
+          echo "========================================="
+          echo ""
+          echo "Source Branch : ${{ github.head_ref }}"
+          echo "Target Branch : ${{ github.base_ref }}"
+          echo ""
+          echo "This workflow runs because the PR"
+          echo "is targeting the 'main' branch."
